@@ -33,15 +33,97 @@ class ConnectFour {
   }
 
   static checkWin(grid) {
-
+    let result;
     // Return 'X' if player X wins
     // Return 'O' if player O wins
     // Return 'T' if the game is a tie
     // Return false if the game has not ended
+   let bool= grid.every(ele=>{
+      return ele.every(item=>{
+        return item===" ";
+      });
+    });
+    if(bool){
+      return false;
+    }
     let masterGrid=this.getmasterGrid(grid);
-   
-      
-    
+    let onlyFour=masterGrid.filter(ele=>{
+      if(ele.length===4){
+        return true;
+      }
+      return false;
+    });
+    let notFour=masterGrid.filter(ele=>{
+      if(ele.length>4){
+        return true;
+      }
+      return false;
+    }) 
+    onlyFour.forEach(
+      ele=>{
+        if(ele.indexOf(" ")===-1){
+
+          let xwins=ele.filter(
+            item=>{
+              if(item!=="X"){
+                return true;
+              }
+              return false;
+            }
+          );
+          let owins=ele.filter(
+            item=>{
+              if(item!=="O"){
+                return true;
+              }
+              return false;
+            }
+          );
+            if(xwins.length===0){
+              result= "X";
+            }
+            if(owins.length===0){
+              result= "O";
+            }
+        }
+      }
+    );
+    if(result!==undefined){
+      return result;
+    }
+    notFour.forEach(ele=>{
+      ele.forEach((item,index)=>{
+  
+        
+        // if(ele[index+1]!==undefined&&
+        //   ele[index+2]!==undefined&&
+        //   ele[index+3]!==undefined){
+
+        if(item!==" "){
+
+          if(item===ele[index+1] &&
+            ele[index+2]===ele[index+3]&& 
+            item===ele[index+3]){
+            return result=item;
+          }
+        }
+          //}
+       });
+    });
+    if(result!==undefined){
+      return result;
+    }
+    masterGrid.forEach(
+      ele=>{
+        if(ele.includes(" ")){
+          if(result===undefined){result=false;}
+        }
+      }
+    );
+    if(result===undefined){
+      result="T";
+    }
+    return result;
 
   }
   static getmasterGrid(grid){
@@ -62,13 +144,13 @@ class ConnectFour {
     let diagonal=[]; //select a top left 3X4 portion of grid
       for(let k=0;k<3;k++){
         // let diagonal1=[];
-        for(l=0;l<4;l++){
+        for(let l=0;l<4;l++){
         //   diagonal1.push(grid[k][l]);
           let diagmini=[grid[k][l]];
           let row=k;
           let col=l;
 
-            for(p=0;p<3;p++){
+            for(let p=0;p<3;p++){
                
                 
                 diagmini.push(grid[row+=1][col+=1]);
@@ -86,13 +168,13 @@ class ConnectFour {
       diagonal=[]; //select a top left 3X4 portion of grid
       for(let k=0;k<3;k++){
         // let diagonal1=[];
-        for(l=0;l<4;l++){
+        for(let l=0;l<4;l++){
         //   diagonal1.push(grid[k][l]);
           let diagmini=[grid[k][l]];
           let row=k;
           let col=l;
 
-            for(p=0;p<3;p++){
+            for(let p=0;p<3;p++){
                
                 
                 diagmini.push(grid[row+=1][col+=1]);
