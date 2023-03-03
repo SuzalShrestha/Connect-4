@@ -21,17 +21,29 @@ class ConnectFour {
     Screen.setGridlines(true);
 
     // Replace this with real commands
-    Screen.addCommand('t', 'test command (remove)', ConnectFour.testCommand);
-
+    Screen.addCommand('left', 'move cursor left', this.cursor.left.bind(this));
+    Screen.addCommand('right', 'move cursor right', this.cursor.right.bind(this));
+    Screen.addCommand('return', 'place move', this.placemove.bind(this));
     this.cursor.setBackgroundColor();
     Screen.render();
   }
-
-  // Remove this
-  static testCommand() {
-    console.log("TEST COMMAND");
+  placemove(){
+    let col=this.cursor.col;
+    let row=this.cursor.row;
+    let char=this.playerTurn;
+    Screen.setGrid(row,col,char);
+    Screen.render();
+    if(this.playerTurn==="O"){
+      this.playerTurn="X";
+    }else{
+      this.playerTurn="O";
+    }
+    let winner=ConnectFour.checkWin(Screen.grid);
+    if(winner){
+      ConnectFour.endGame(winner);
+    }
+    this.cursor.resetBackgroundColor();
   }
-
   static checkWin(grid) {
     let result;
     // Return 'X' if player X wins
