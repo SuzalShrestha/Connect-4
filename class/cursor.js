@@ -31,7 +31,7 @@ class Cursor {
   down(){
     
     this.resetBackgroundColor();
-    if(this.row<2){
+    if(this.row<5){
       this.row+=1;
     }
     this.setBackgroundColor();
@@ -50,7 +50,7 @@ class Cursor {
 
   right() {
     this.resetBackgroundColor();
-    if(this.col<2){
+    if(this.col<6){
       this.col+=1;
     }
     this.setBackgroundColor();

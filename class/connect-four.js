@@ -21,8 +21,12 @@ class ConnectFour {
     Screen.setGridlines(true);
 
     // Replace this with real commands
-    Screen.addCommand('left', 'move cursor left', this.cursor.left.bind(this));
-    Screen.addCommand('right', 'move cursor right', this.cursor.right.bind(this));
+    Screen.addCommand('left', 'move cursor left', this.cursor.left.bind(this.cursor));
+    Screen.addCommand('right', 'move cursor right', this.cursor.right.bind(this.cursor));
+    Screen.addCommand('up', 'move cursor up', this.cursor.up.bind(this.cursor));
+
+    Screen.addCommand('down', 'move cursor down', this.cursor.down.bind(this.cursor));
+
     Screen.addCommand('return', 'place move', this.placemove.bind(this));
     this.cursor.setBackgroundColor();
     Screen.render();
@@ -174,7 +178,8 @@ class ConnectFour {
       masterGrid.push(...diagonal);
       //reverse diagonal
       let reverseGrid=[];
-      for(let item of grid){
+      let newGrid=JSON.parse(JSON.stringify(grid));//problem fix that json manipulated data
+      for(let item of newGrid){
         reverseGrid.push(item.reverse());
       }
       diagonal=[]; //select a top left 3X4 portion of grid
@@ -182,14 +187,14 @@ class ConnectFour {
         // let diagonal1=[];
         for(let l=0;l<4;l++){
         //   diagonal1.push(grid[k][l]);
-          let diagmini=[grid[k][l]];
+          let diagmini=[reverseGrid[k][l]];
           let row=k;
           let col=l;
 
             for(let p=0;p<3;p++){
                
                 
-                diagmini.push(grid[row+=1][col+=1]);
+                diagmini.push(reverseGrid[row+=1][col+=1]);
                 
             }
            diagonal.push(diagmini);
